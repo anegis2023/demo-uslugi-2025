@@ -20,55 +20,67 @@ const ContactForm = () => {
         <div className="grid lg:grid-cols-3 gap-8">
           {/* Contact Information */}
           <div className="lg:col-span-1">
-            <Card className="shadow-lg">
-              <CardHeader>
-                <CardTitle className="text-2xl font-bold text-primary">Informacje kontaktowe</CardTitle>
-                <CardDescription>
-                  Skontaktuj się z nami za pomocą dowolnego z poniższych kanałów
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-6">
-                <div className="flex items-start space-x-4">
-                  <div className="bg-primary/10 p-3 rounded-full">
-                    <Phone className="h-5 w-5 text-primary" />
+            <div className="relative">
+              <Card className="shadow-lg relative z-10">
+                <CardHeader>
+                  <CardTitle className="text-2xl font-bold text-primary">Informacje kontaktowe</CardTitle>
+                  <CardDescription>
+                    Skontaktuj się z nami za pomocą dowolnego z poniższych kanałów
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-6">
+                  <div className="flex items-start space-x-4">
+                    <div className="bg-primary/10 p-3 rounded-full">
+                      <Phone className="h-5 w-5 text-primary" />
+                    </div>
+                    <div>
+                      <h4 className="font-semibold text-foreground">Telefon</h4>
+                      <p className="text-muted-foreground">+48 800 190 911</p>
+                      <p className="text-sm text-muted-foreground">Pon-Pt 8:00-18:00</p>
+                    </div>
                   </div>
-                  <div>
-                    <h4 className="font-semibold text-foreground">Telefon</h4>
-                    <p className="text-muted-foreground">+48 800 190 911</p>
-                    <p className="text-sm text-muted-foreground">Pon-Pt 8:00-18:00</p>
-                  </div>
-                </div>
 
+                  <div className="flex items-start space-x-4">
+                    <div className="bg-primary/10 p-3 rounded-full">
+                      <MapPin className="h-5 w-5 text-primary" />
+                    </div>
+                    <div>
+                      <h4 className="font-semibold text-foreground">Adres</h4>
+                      <p className="text-muted-foreground">
+                        Centrum Biznesowe<br />
+                        Warszawa, Polska
+                      </p>
+                    </div>
+                  </div>
 
-
-                <div className="flex items-start space-x-4">
-                  <div className="bg-primary/10 p-3 rounded-full">
-                    <MapPin className="h-5 w-5 text-primary" />
+                  <div className="flex items-start space-x-4">
+                    <div className="bg-primary/10 p-3 rounded-full">
+                      <Clock className="h-5 w-5 text-primary" />
+                    </div>
+                    <div>
+                      <h4 className="font-semibold text-foreground">Godziny pracy</h4>
+                      <p className="text-muted-foreground">
+                        Poniedziałek - Piątek: 8:00 - 18:00<br />
+                        Sobota: 9:00 - 14:00<br />
+                        Niedziela: Zamknięte
+                      </p>
+                    </div>
                   </div>
-                  <div>
-                    <h4 className="font-semibold text-foreground">Adres</h4>
-                    <p className="text-muted-foreground">
-                      Centrum Biznesowe<br />
-                      Warszawa, Polska
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex items-start space-x-4">
-                  <div className="bg-primary/10 p-3 rounded-full">
-                    <Clock className="h-5 w-5 text-primary" />
-                  </div>
-                  <div>
-                    <h4 className="font-semibold text-foreground">Godziny pracy</h4>
-                    <p className="text-muted-foreground">
-                      Poniedziałek - Piątek: 8:00 - 18:00<br />
-                      Sobota: 9:00 - 14:00<br />
-                      Niedziela: Zamknięte
-                    </p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
+                </CardContent>
+              </Card>
+              <div className="mt-8 relative">
+                <img 
+                  src="/images/firs_section.png" 
+                  alt="Profesjonalne usługi" 
+                  className="w-full rounded-lg shadow-lg object-cover transform transition-transform duration-300 hover:scale-[1.02]" 
+                  style={{ 
+                    maxHeight: '280px',
+                    objectPosition: 'center',
+                  }}
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent rounded-lg"></div>
+              </div>
+            </div>
           </div>
 
           {/* Contact Form */}

@@ -68,10 +68,7 @@ const Footer = () => {
                 <Phone className="h-4 w-4" />
                 <span>+48 800 190 911</span>
               </div>
-              <div className="flex items-center space-x-3">
-                <Mail className="h-4 w-4" />
-                <span>kontakt@impelpro.com</span>
-              </div>
+              {/* Email removed as requested */}
               <div className="flex items-start space-x-3">
                 <MapPin className="h-4 w-4 mt-1" />
                 <span>Centrum Biznesowe<br />Warszawa, Polska</span>

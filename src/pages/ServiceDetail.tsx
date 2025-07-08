@@ -234,6 +234,60 @@ const ServiceDetail = () => {
                     </li>
                   ))}
                 </ul>
+                {serviceId === 'sprzatanie' && (
+                  <div className="mt-8">
+                    <img 
+                      src="/images/czystosc.png" 
+                      alt="Czystość w miejscu pracy" 
+                      className="w-full rounded-lg shadow-md" 
+                    />
+                  </div>
+                )}
+                {serviceId === 'ochrona' && (
+                  <div className="mt-8">
+                    <img 
+                      src="/images/bezpieczenstwo-2.png" 
+                      alt="Bezpieczeństwo Twojego biznesu" 
+                      className="w-full rounded-lg shadow-md" 
+                    />
+                  </div>
+                )}
+                {serviceId === 'bhp' && (
+                  <div className="mt-8">
+                    <img 
+                      src="/images/bhp.png" 
+                      alt="Bezpieczeństwo i higiena pracy" 
+                      className="w-full rounded-lg shadow-md" 
+                    />
+                  </div>
+                )}
+                {serviceId === 'procesy-biznesowe' && (
+                  <div className="mt-8">
+                    <img 
+                      src="/images/pb.png" 
+                      alt="Procesy biznesowe" 
+                      className="w-full rounded-lg shadow-md" 
+                    />
+                  </div>
+                )}
+                {serviceId === 'catering' && (
+                  <div className="mt-8">
+                    <img 
+                      src="/images/cetering.png" 
+                      alt="Usługi cateringowe" 
+                      className="w-full rounded-lg shadow-md" 
+                    />
+                  </div>
+                )}
+                {serviceId === 'techniczne' && (
+                  <div className="mt-8">
+                    <img 
+                      src="/images/serwis.png" 
+                      alt="Usługi techniczne" 
+                      className="w-full rounded-lg shadow-md" 
+                    />
+                  </div>
+                )}
               </div>
             </div>
 
