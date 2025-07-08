@@ -26,10 +26,7 @@ const Header = () => {
               <Phone className="h-4 w-4" />
               <span>+48 800 190 911</span>
             </div>
-            <div className="flex items-center space-x-2">
-              <Mail className="h-4 w-4" />
-              <span>kontakt@impelpro.com</span>
-            </div>
+
           </div>
         </div>
 

@@ -10,8 +10,12 @@ const Footer = () => {
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Company Info */}
           <div>
-            <div className="text-2xl font-bold mb-4">
-              IMPEL<span className="text-accent-red-foreground ml-1">PRO</span>
+            <div className="mb-4">
+              <img 
+                src="/images/IMPELLOGOwhite.png" 
+                alt="IMPEL PRO" 
+                className="h-16 w-auto"
+              />
             </div>
             <p className="text-primary-foreground/80 mb-4">
               Profesjonalna firma outsourcingowa świadcząca kompleksowe usługi biznesowe 
@@ -77,7 +81,7 @@ const Footer = () => {
         </div>
 
         <div className="border-t border-primary-foreground/20 mt-8 pt-8 text-center text-primary-foreground/80">
-          <p>&copy; {currentYear} ImpelPro. Wszelkie prawa zastrzeżone. Profesjonalne usługi biznesowe.</p>
+          <p>&copy; {currentYear} Impel Group. Wszelkie prawa zastrzeżone. Profesjonalne usługi biznesowe.</p>
         </div>
       </div>
     </footer>

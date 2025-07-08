@@ -1,6 +1,5 @@
 
 import { Button } from "@/components/ui/button";
-import heroImage from "@/assets/hero-handshake.jpg";
 import { useState } from "react";
 import { IframePopup } from "@/components/ui/iframe-popup";
 
@@ -19,7 +18,7 @@ const HeroSection = () => {
       {/* Background Image */}
       <div 
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: `url(${heroImage})` }}
+        style={{ backgroundImage: `url('/images/BANNER_IMPEL_FINAL.jpg')` }}
       >
         {/* Overlay */}
         <div className="absolute inset-0 bg-gradient-to-r from-primary/80 via-primary/60 to-transparent"></div>

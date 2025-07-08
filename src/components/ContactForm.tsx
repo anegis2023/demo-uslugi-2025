@@ -39,16 +39,7 @@ const ContactForm = () => {
                   </div>
                 </div>
 
-                <div className="flex items-start space-x-4">
-                  <div className="bg-primary/10 p-3 rounded-full">
-                    <Mail className="h-5 w-5 text-primary" />
-                  </div>
-                  <div>
-                    <h4 className="font-semibold text-foreground">Email</h4>
-                    <p className="text-muted-foreground">kontakt@impelpro.com</p>
-                    <p className="text-sm text-muted-foreground">Odpowiadamy w ciągu 24h</p>
-                  </div>
-                </div>
+
 
                 <div className="flex items-start space-x-4">
                   <div className="bg-primary/10 p-3 rounded-full">

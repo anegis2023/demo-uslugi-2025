@@ -191,8 +191,26 @@
             </div>
             
             <div class="text-center">
-                <a href="/" class="button">Powrót do strony głównej</a>
+                <p id="redirect-message">Nastąpi automatyczne przekierowanie za <span id="countdown">5</span> sekund...</p>
             </div>
+            
+            <script>
+                // Set up countdown for redirection
+                let seconds = 5;
+                const countdownElement = document.getElementById('countdown');
+                
+                // Update countdown every second
+                const countdownInterval = setInterval(function() {
+                    seconds--;
+                    countdownElement.textContent = seconds;
+                    
+                    if (seconds <= 0) {
+                        clearInterval(countdownInterval);
+                        // Redirect to previous page
+                        window.history.back();
+                    }
+                }, 1000);
+            </script>
         </div>
     </div>
 </body>
