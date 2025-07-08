@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dziękujemy za wypełnienie formularza</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #0055a5;
+            --accent-color: #e63946;
+            --text-color: #333;
+            --light-bg: #f8f9fa;
+            --border-color: #e0e0e0;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: #f5f7fa;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .container {
+            max-width: 600px;
+            margin: 30px auto;
+            padding: 0 15px;
+        }
+        
+        .thank-you-card {
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+        }
+        
+        .header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+        }
+        
+        h1 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 30px;
+            color: var(--primary-color);
+        }
+        
+        .step {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .step:last-child {
+            margin-bottom: 0;
+        }
+        
+        .step-number {
+            background-color: var(--primary-color);
+            color: white;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+        
+        .step-content h2 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        
+        .step-content p {
+            color: #555;
+            font-size: 16px;
+        }
+        
+        .button {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            font-weight: 600;
+            margin-top: 30px;
+            transition: background-color 0.2s;
+        }
+        
+        .button:hover {
+            background-color: #004080;
+        }
+        
+        .text-center {
+            text-align: center;
+        }
+        
+        a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+        
+        a:hover {
+            text-decoration: underline;
+        }
+        
+        @media (max-width: 600px) {
+            .container {
+                margin: 20px auto;
+            }
+            
+            .thank-you-card {
+                padding: 25px;
+            }
+            
+            h1 {
+                font-size: 24px;
+            }
+            
+            .step {
+                gap: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="thank-you-card">
+            <h1>Dziękujemy za wypełnienie formularza</h1>
+            
+            <div class="step">
+                <div class="step-number">1</div>
+                <div class="step-content">
+                    <h2>Potwierdź swój adres e-mail</h2>
+                    <p>
+                        Aby wziąć udział w procesie rejestracji, prosimy, abyś potwierdził / potwierdziła swój adres e-mail w wiadomości, którą do Ciebie wysłaliśmy. 
+                        Pamiętaj także o sprawdzenie folderu SPAM. Jeśli jednak już wcześniej miałeś / miałaś kontakt z naszą firmą, to nie wyślemy Ci ponownej 
+                        prośby o potwierdzenie, gdyż już znajdujesz się w naszej bazie subskrybentów.
+                    </p>
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-number">2</div>
+                <div class="step-content">
+                    <h2>Rozpoczynamy weryfikację</h2>
+                    <p>
+                        Twoje zgłoszenie zostanie zweryfikowane przez nasz zespół, aby upewnić się, że spełnia wszystkie wymagane kryteria. 
+                        Proces ten zostanie zakończony w ciągu 24 godzin, o czym Cię poinformujemy.
+                    </p>
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-number">3</div>
+                <div class="step-content">
+                    <h2>Poczekaj na potwierdzenie Twojego udziału</h2>
+                    <p>
+                        Po pomyślnej weryfikacji, wyślemy na Twój adres e-mail wiadomość potwierdzającą Twój dostęp do nagrań!
+                    </p>
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-number">4</div>
+                <div class="step-content">
+                    <h2>Masz pytania? Napisz do nas!</h2>
+                    <p>
+                        W przypadku dodatkowych pytań, prosimy o kontakt na adres e-mail: <a href="mailto:events@anegis.com">events@anegis.com</a>. 
+                        Jesteśmy do Twojej dyspozycji!
+                    </p>
+                </div>
+            </div>
+            
+            <div class="text-center">
+                <a href="/" class="button">Powrót do strony głównej</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
