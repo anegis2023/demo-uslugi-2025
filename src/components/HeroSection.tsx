@@ -33,7 +33,7 @@ const HeroSection = () => {
               <span className="block text-accent-red-foreground">dla Twojego biznesu</span>
             </h1>
             <p className="text-xl text-white/90 mb-8 leading-relaxed max-w-2xl">
-              Jesteśmy firmą outourcingową oferującą kompleksowe usługi biznesowe 
+              Jesteśmy firmą outsourcingową oferującą kompleksowe usługi biznesowe 
               na terenie całego kraju. Odkryj nasze innowacyjne rozwiązania!
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
