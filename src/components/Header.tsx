@@ -11,6 +11,7 @@ const Header = () => {
 
   const navigation = [
     { name: "Usługi", href: "#services" },
+    { name: "Wydarzenia", href: "/wydarzenia" },
     { name: "O nas", href: "#about" },
     { name: "Jak pracujemy", href: "#process" },
     { name: "Kontakt", href: "#contact" },
@@ -43,7 +44,7 @@ const Header = () => {
             {navigation.map((item) => (
               <a
                 key={item.name}
-                href={isHomePage ? item.href : "/"}
+                href={isHomePage ? item.href : item.href.startsWith("/") ? item.href : "/"}
                 className="text-foreground hover:text-primary transition-colors duration-200 font-medium"
               >
                 {item.name}
@@ -94,7 +95,7 @@ const Header = () => {
               {navigation.map((item) => (
                 <a
                   key={item.name}
-                  href={isHomePage ? item.href : "/"}
+                  href={isHomePage ? item.href : item.href.startsWith("/") ? item.href : "/"}
                   className="text-foreground hover:text-primary transition-colors duration-200 font-medium"
                   onClick={() => setIsMenuOpen(false)}
                 >
