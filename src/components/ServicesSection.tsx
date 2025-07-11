@@ -106,7 +106,9 @@ const ServicesSection = () => {
                 {service.id === 'przemyslowe' || service.id === 'opieka-medyczna' ? (
                   <Button 
                     variant="outline" 
-                    className="w-full group-hover:bg-primary group-hover:text-primary-foreground transition-colors"
+                    className="w-full group-hover:bg-primary group-hover:text-primary-foreground transition-colors track-ticket-link"
+                    data-service-id={service.id}
+                    data-service-name={service.title}
                     onClick={(e) => {
                       e.preventDefault();
                       // You can add custom functionality here if needed
@@ -119,7 +121,9 @@ const ServicesSection = () => {
                   <Link to={`/uslugi/${service.id}`}>
                     <Button 
                       variant="outline" 
-                      className="w-full group-hover:bg-primary group-hover:text-primary-foreground transition-colors"
+                      className="w-full group-hover:bg-primary group-hover:text-primary-foreground transition-colors track-ticket-link"
+                      data-service-id={service.id}
+                      data-service-name={service.title}
                     >
                       Dowiedz się więcej
                     </Button>
