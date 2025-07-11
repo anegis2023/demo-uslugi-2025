@@ -11,6 +11,7 @@ import EventDetail from "./pages/EventDetail";
 import NotFound from "./pages/NotFound";
 import ThankYouPage from "./components/ThankYouPage";
 import ScrollToTopButton from "./components/ScrollToTopButton";
+import FloatingContactButton from "./components/FloatingContactButton";
 
 const queryClient = new QueryClient();
 
@@ -21,6 +22,7 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <ScrollToTopButton />
+        <FloatingContactButton />
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/uslugi/:serviceId" element={<ServiceDetail />} />
