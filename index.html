@@ -68,13 +68,14 @@
             
             // Track the click event
             if (window.msdynci) {
+              // Format the event name to include the service ID for better D365 tracking
               window.msdynci('trackEvent', {
-                eventName: 'DowiedzSieWiecej',
+                eventName: `DowiedzSieWiecej_${serviceId}`, // Include service ID in the event name
                 properties: {
                   msdynci_actiontype: 'LClick',
                   elementName: `Link Dowiedz się więcej - ${serviceName}`,
-                  serviceId: serviceId,
-                  serviceName: serviceName,
+                  msdynci_serviceid: serviceId, // Use msdynci_ prefix for better D365 integration
+                  msdynci_servicename: serviceName, // Use msdynci_ prefix for better D365 integration
                   pageURL: window.location.href
                 }
               });
