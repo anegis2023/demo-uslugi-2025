@@ -43,47 +43,5 @@
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
-    
-    <!-- D365 Tracking Script for "Dowiedz się więcej" buttons -->
-    <script>
-      document.addEventListener('DOMContentLoaded', function () {
-        // Use event delegation to catch all clicks on buttons with the track-ticket-link class
-        document.addEventListener('click', function(event) {
-          // Check if the clicked element or any of its parents has the track-ticket-link class
-          let target = event.target;
-          let trackElement = null;
-          
-          while (target && target !== document) {
-            if (target.classList && target.classList.contains('track-ticket-link')) {
-              trackElement = target;
-              break;
-            }
-            target = target.parentNode;
-          }
-          
-          // If we found a tracking element, send the event
-          if (trackElement) {
-            const serviceId = trackElement.getAttribute('data-service-id') || 'unknown';
-            const serviceName = trackElement.getAttribute('data-service-name') || 'Unknown Service';
-            
-            // Track the click event
-            if (window.msdynci) {
-              // Format the event name to include the service ID for better D365 tracking
-              window.msdynci('trackEvent', {
-                eventName: `DowiedzSieWiecej_${serviceId}`, // Include service ID in the event name
-                properties: {
-                  msdynci_actiontype: 'LClick',
-                  elementName: `Link Dowiedz się więcej - ${serviceName}`,
-                  msdynci_serviceid: serviceId, // Use msdynci_ prefix for better D365 integration
-                  msdynci_servicename: serviceName, // Use msdynci_ prefix for better D365 integration
-                  pageURL: window.location.href
-                }
-              });
-              console.log(`Tracked click on service: ${serviceName} (${serviceId})`);
-            }
-          }
-        });
-      });
-    </script>
   </body>
 </html>
