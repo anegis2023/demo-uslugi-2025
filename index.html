@@ -35,6 +35,97 @@
             }
         });
     </script>
+    <script>
+(function () {
+    console.log('Session control script starting');
+    
+    // Check if the Dynamics 365 tracking has already run in this session
+    if (sessionStorage.getItem('d365JourneyFired')) {
+        console.log('D365 journey already triggered in this session.');
+        return;
+    }
+
+    // Optional: Add additional checks like URL path, referrer, etc.
+    const currentUrl = window.location.href;
+    console.log('Current URL:', currentUrl);
+    
+    // Allow both production and local development
+    if (!currentUrl.includes('anegis.netlify.app') && !currentUrl.includes('localhost')) {
+        console.log('URL check failed, script not running on approved domain');
+        return;
+    }
+
+    // Log all global objects that might be related to the tracking script
+    console.log('Window objects:', Object.keys(window).filter(key => 
+        key.includes('MSC') || key.includes('mscr') || 
+        key.includes('track') || key.includes('analytics')
+    ));
+    
+    // Check for specific objects
+    console.log('MSCI object exists:', !!window.MSCI);
+    console.log('MSCIqueue object exists:', !!window.MSCIqueue);
+    console.log('mscrmMarketing object exists:', !!window.mscrmMarketing);
+
+    // Maximum number of retry attempts
+    let retryCount = 0;
+    const MAX_RETRIES = 20; // 20 retries * 500ms = 10 seconds max
+
+    // Wait until Dynamics 365 script is ready
+    function triggerD365Journey() {
+        console.log('Attempting to trigger D365 journey (attempt ' + (retryCount + 1) + ')');
+        retryCount++;
+        
+        // Try different possible object paths
+        if (window.mscrmMarketing && typeof window.mscrmMarketing.trackPageVisit === 'function') {
+            console.log('Found mscrmMarketing.trackPageVisit, triggering');
+            try {
+                window.mscrmMarketing.trackPageVisit();
+                sessionStorage.setItem('d365JourneyFired', 'true');
+                console.log('D365 journey trigger fired via mscrmMarketing.trackPageVisit');
+            } catch (e) {
+                console.error('Error triggering mscrmMarketing.trackPageVisit:', e);
+            }
+        } 
+        else if (window.MSCI && typeof window.MSCI.trackView === 'function') {
+            console.log('Found MSCI.trackView, triggering with current URI');
+            try {
+                // Provide the current URI as required by the trackView method
+                window.MSCI.trackView({
+                    uri: window.location.href,
+                    pageName: document.title || 'Impel Group Website'
+                });
+                sessionStorage.setItem('d365JourneyFired', 'true');
+                console.log('D365 journey trigger fired via MSCI.trackView');
+            } catch (e) {
+                console.error('Error triggering MSCI.trackView:', e);
+            }
+        }
+        else if (window.MSCI && typeof window.MSCI.trackEvent === 'function') {
+            console.log('Found MSCI.trackEvent, triggering');
+            try {
+                window.MSCI.trackEvent('pageVisit');
+                sessionStorage.setItem('d365JourneyFired', 'true');
+                console.log('D365 journey trigger fired via MSCI.trackEvent');
+            } catch (e) {
+                console.error('Error triggering MSCI.trackEvent:', e);
+            }
+        }
+        else {
+            if (retryCount < MAX_RETRIES) {
+                console.log('D365 script not ready yet, retrying in 500ms (attempt ' + retryCount + ' of ' + MAX_RETRIES + ')');
+                // Try again if script not ready yet
+                setTimeout(triggerD365Journey, 500);
+            } else {
+                console.log('Maximum retry attempts reached. D365 tracking objects not found.');
+            }
+        }
+    }
+
+    // Delay slightly to allow scripts to load
+    console.log('Setting initial delay of 1000ms to allow scripts to load');
+    setTimeout(triggerD365Journey, 1000);
+})();
+    </script>
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:site" content="@impel_group" />
     <meta name="twitter:image" content="/anegis-image.jpg" />
