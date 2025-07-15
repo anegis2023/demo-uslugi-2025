@@ -245,11 +245,20 @@ const ServiceDetail = () => {
                 )}
                 {serviceId === 'ochrona' && (
                   <div className="mt-8">
-                    <img 
-                      src="/images/bezpieczenstwo-2.png" 
-                      alt="Bezpieczeństwo Twojego biznesu" 
-                      className="w-full rounded-lg shadow-md" 
-                    />
+                    <video 
+                      autoPlay={true}
+                      loop={true}
+                      muted={true}
+                      playsInline={true}
+                      controls={false}
+                      poster="/images/bezpieczenstwo-2.png"
+                      preload="auto"
+                      aria-label="Bezpieczeństwo Twojego biznesu"
+                      className="w-full rounded-lg shadow-md"
+                    >
+                      <source src="/images/impel-security.mp4" type="video/mp4" />
+                      Your browser does not support the video tag.
+                    </video>
                   </div>
                 )}
                 {serviceId === 'bhp' && (
@@ -272,11 +281,20 @@ const ServiceDetail = () => {
                 )}
                 {serviceId === 'catering' && (
                   <div className="mt-8">
-                    <img 
-                      src="/images/cetering.png" 
-                      alt="Usługi cateringowe" 
-                      className="w-full rounded-lg shadow-md" 
-                    />
+                    <video 
+                      autoPlay={true}
+                      loop={true}
+                      muted={true}
+                      playsInline={true}
+                      controls={false}
+                      poster="/images/cetering.png"
+                      preload="auto"
+                      aria-label="Usługi cateringowe"
+                      className="w-full rounded-lg shadow-md"
+                    >
+                      <source src="/images/impel-catering.mp4" type="video/mp4" />
+                      Your browser does not support the video tag.
+                    </video>
                   </div>
                 )}
                 {serviceId === 'techniczne' && (
