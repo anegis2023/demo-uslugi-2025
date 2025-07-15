@@ -236,11 +236,20 @@ const ServiceDetail = () => {
                 </ul>
                 {serviceId === 'sprzatanie' && (
                   <div className="mt-8">
-                    <img 
-                      src="/images/czystosc.png" 
-                      alt="Czystość w miejscu pracy" 
-                      className="w-full rounded-lg shadow-md" 
-                    />
+                    <video 
+                      autoPlay={true}
+                      loop={true}
+                      muted={true}
+                      playsInline={true}
+                      controls={false}
+                      poster="/images/czystosc.png"
+                      preload="auto"
+                      aria-label="Czystość w miejscu pracy"
+                      className="w-full rounded-lg shadow-md"
+                    >
+                      <source src="/images/impel-sprzatanie.mp4" type="video/mp4" />
+                      Your browser does not support the video tag.
+                    </video>
                   </div>
                 )}
                 {serviceId === 'ochrona' && (
