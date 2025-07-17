@@ -1,10 +1,56 @@
-import { useState, useEffect } from "react";
-import { Phone, X } from "lucide-react";
+import React, { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
+import { Phone, X } from 'lucide-react';
+
+// Add D365 Form Capture type definition
+declare global {
+  interface Window {
+    d365mktformcapture?: {
+      serializeForm: (form: HTMLFormElement, mappings: any[]) => any;
+      submitForm: (config: any, payload: any) => Promise<any>;
+    };
+  }
+}
 
 const FloatingContactButton = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [formSubmitted, setFormSubmitted] = useState(false);
+  const [scriptLoaded, setScriptLoaded] = useState(false);
+  const [scriptError, setScriptError] = useState(false);
+  
+  // Load D365 Form Capture script
+  useEffect(() => {
+    // Skip if script is already loaded
+    if (window.d365mktformcapture || document.getElementById('d365-form-capture-script')) {
+      setScriptLoaded(true);
+      return;
+    }
+    
+    const script = document.createElement('script');
+    script.id = 'd365-form-capture-script';
+    script.src = 'https://mktdplp102cdn.azureedge.net/public/latest/js/form-loader.js?v=' + new Date().getTime();
+    script.async = true;
+    script.defer = true;
+    
+    script.onload = () => {
+      console.log('D365 Form Capture script loaded successfully');
+      setScriptLoaded(true);
+    };
+    
+    script.onerror = () => {
+      console.error('Failed to load D365 Form Capture script');
+      setScriptError(true);
+    };
+    
+    document.head.appendChild(script);
+    
+    return () => {
+      // Cleanup if component unmounts during loading
+      if (document.getElementById('d365-form-capture-script')) {
+        document.head.removeChild(script);
+      }
+    };
+  }, []);
 
   // Close popup when ESC key is pressed
   useEffect(() => {
@@ -52,68 +98,52 @@ const FloatingContactButton = () => {
     e.preventDefault();
 
     const form = e.currentTarget;
-    const formData = new FormData(form);
-
-    // Collect form data
-    const firstName = formData.get('firstName') as string;
-    const lastName = formData.get('lastName') as string;
-    const companyName = formData.get('companyName') as string;
-    const phoneNumber = formData.get('phoneNumber') as string;
-    const bazaWiedzy = formData.get('bazaWiedzy') ? 'true' : 'false';
-    const sourceFile = formData.get('sourceFile') as string;
-
-    // Create payload for D365
-    const payload = {
-      firstName,
-      lastName,
-      companyName,
-      phoneNumber,
-      bazaWiedzy,
-      sourceFile
-    };
-
-    // Log the form data (for debugging)
-    console.log('Form data:', payload);
-
-    // Simulate successful submission
-    // In a real implementation, this would be replaced with the actual D365 Form Capture API call
-    setTimeout(() => {
-      setFormSubmitted(true);
-    }, 1000);
-
-    // NOTE: In a production environment, you would use the D365 Form Capture API like this:
-    /*
-    if (window.d365mktformcapture) {
-      const mappings = [
-        { FormFieldName: "firstName", DataverseFieldName: "firstname" },
-        { FormFieldName: "lastName", DataverseFieldName: "lastname" },
-        { FormFieldName: "companyName", DataverseFieldName: "an_an_companyname" },
-        { FormFieldName: "phoneNumber", DataverseFieldName: "mobilephone" },
-        { FormFieldName: "bazaWiedzy", DataverseFieldName: "cr8b4_bazawiedzy" },
-        { FormFieldName: "sourceFile", DataverseFieldName: "an_sourcefile" },
-      ];
-
-      try {
-        const serializedForm = window.d365mktformcapture.serializeForm(form, mappings);
-        const payload = serializedForm.SerializedForm.build();
-
-        const captureConfig = {
-          FormId: "9c07ac8d-275e-f011-bec2-7c1e5237d071",
-          FormApiUrl: "https://public-eur.mkt.dynamics.com/api/v1.0/orgs/1e5b64c1-c132-4237-9477-532bcddae3fd/landingpageforms"
-        };
-
-        window.d365mktformcapture.submitForm(captureConfig, payload)
-          .then(() => setFormSubmitted(true))
-          .catch(error => {
-            console.error('Form submission error:', error);
-            alert('Wystąpił błąd podczas wysyłania formularza. Prosimy spróbować ponownie.');
-          });
-      } catch (error) {
-        console.error('Error processing form:', error);
-        alert('Wystąpił błąd podczas przetwarzania formularza. Prosimy spróbować ponownie.');
-      }
+    
+    // Check if D365 Form Capture API is loaded
+    if (!scriptLoaded || scriptError || typeof window.d365mktformcapture === 'undefined') {
+      console.error('D365 Form Capture API not loaded or error occurred');
+      alert('Wystąpił błąd podczas ładowania formularza. Prosimy odświeżyć stronę i spróbować ponownie.');
+      return;
     }
-    */
+
+    // Define field mappings for D365
+    const mappings = [
+      { FormFieldName: "firstName", DataverseFieldName: "firstname" },
+      { FormFieldName: "lastName", DataverseFieldName: "lastname" },
+      { FormFieldName: "companyName", DataverseFieldName: "an_an_companyname" },
+      { FormFieldName: "phoneNumber", DataverseFieldName: "mobilephone" },
+      { FormFieldName: "bazaWiedzy", DataverseFieldName: "cr8b4_bazawiedzy" },
+      { FormFieldName: "sourceFile", DataverseFieldName: "an_sourcefile" },
+    ];
+
+    try {
+      // Serialize form data using D365 Form Capture API
+      const serializedForm = window.d365mktformcapture.serializeForm(form, mappings);
+      const payload = serializedForm.SerializedForm.build();
+      
+      // Log the payload for debugging
+      console.log('D365 payload:', payload);
+
+      // Configure D365 Form Capture submission
+      const captureConfig = {
+        FormId: "9c07ac8d-275e-f011-bec2-7c1e5237d071",
+        FormApiUrl: "https://public-eur.mkt.dynamics.com/api/v1.0/orgs/1e5b64c1-c132-4237-9477-532bcddae3fd/landingpageforms"
+      };
+
+      // Submit form to D365
+      window.d365mktformcapture.submitForm(captureConfig, payload)
+        .then(() => {
+          console.log('Form submitted successfully to D365');
+          setFormSubmitted(true);
+        })
+        .catch(error => {
+          console.error('Form submission error:', error);
+          alert('Wystąpił błąd podczas wysyłania formularza. Prosimy spróbować ponownie.');
+        });
+    } catch (error) {
+      console.error('Error processing form:', error);
+      alert('Wystąpił błąd podczas przetwarzania formularza. Prosimy spróbować ponownie.');
+    }
   };
 
   return (

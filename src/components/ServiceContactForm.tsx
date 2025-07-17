@@ -16,9 +16,9 @@ import { validateNIP } from "@/utils/nipValidation";
 // Declare global interface for Dynamics 365
 declare global {
   interface Window {
-    d365mktformcapture: {
+    d365mktformcapture?: {
       serializeForm: (form: HTMLFormElement, mappings: any[]) => any;
-      submitForm: (config: any, payload: any) => void;
+      submitForm: (config: any, payload: any) => Promise<any>;
     };
   }
 }
