@@ -17,6 +17,13 @@ const FloatingContactButton = () => {
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [scriptLoaded, setScriptLoaded] = useState(false);
   const [scriptError, setScriptError] = useState(false);
+  const [phoneError, setPhoneError] = useState<string | null>(null);
+  const [formData, setFormData] = useState({
+    firstName: '',
+    lastName: '',
+    companyName: '',
+    phoneNumber: '+48'
+  });
   
   // Load D365 Form Capture script
   useEffect(() => {
@@ -67,6 +74,74 @@ const FloatingContactButton = () => {
     };
   }, []);
 
+  // Handle input changes
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    
+    // Special validation for phone number (Polish cell phone number)
+    if (name === 'phoneNumber') {
+      // Handle Polish phone number format (+48XXXXXXXXX)
+      let sanitizedValue = value;
+      
+      // If the user is typing and hasn't added +48 yet, add it for them
+      if (!value.startsWith('+48') && value.length > 0 && !value.includes('+')) {
+        // If they're entering just digits, prepend +48
+        if (/^[0-9]+$/.test(value)) {
+          sanitizedValue = '+48' + value;
+        }
+      }
+      
+      // Ensure only valid characters for phone number (+, digits)
+      sanitizedValue = sanitizedValue.replace(/[^\+0-9]/g, '');
+      
+      // Limit to +48 plus 9 digits (total 12 characters)
+      if (sanitizedValue.startsWith('+48')) {
+        const digitsAfterPrefix = sanitizedValue.substring(3);
+        if (digitsAfterPrefix.length > 9) {
+          sanitizedValue = '+48' + digitsAfterPrefix.slice(0, 9);
+        }
+      } else if (sanitizedValue.startsWith('+')) {
+        // If they're typing a different prefix, limit appropriately
+        if (sanitizedValue.length > 12) {
+          sanitizedValue = sanitizedValue.slice(0, 12);
+        }
+      }
+      
+      setFormData(prev => ({
+        ...prev,
+        [name]: sanitizedValue
+      }));
+      
+      // Validate phone number format
+      if (sanitizedValue.length > 0) {
+        // Check if it's in the correct format: +48 followed by 9 digits
+        const isValidFormat = /^\+48[0-9]{9}$/.test(sanitizedValue);
+        
+        if (!isValidFormat) {
+          if (sanitizedValue.length >= 12) {
+            // If they've entered enough characters but format is wrong
+            setPhoneError('Nieprawidłowy format numeru telefonu. Powinien być w formacie +48 i 9 cyfr.');
+          } else if (sanitizedValue.length > 3) {
+            // If they're still typing but format is wrong
+            setPhoneError('Numer telefonu powinien być w formacie +48 i 9 cyfr.');
+          } else {
+            setPhoneError(null);
+          }
+        } else {
+          setPhoneError(null);
+        }
+      } else {
+        setPhoneError(null);
+      }
+    } else {
+      // For other fields, just update the value
+      setFormData(prev => ({
+        ...prev,
+        [name]: value
+      }));
+    }
+  };
+
   // Prevent body scrolling when popup is open
   useEffect(() => {
     if (isOpen) {
@@ -97,6 +172,12 @@ const FloatingContactButton = () => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+    // Validate phone number before submission
+    if (formData.phoneNumber.length > 0 && !/^\+48[0-9]{9}$/.test(formData.phoneNumber)) {
+      setPhoneError('Nieprawidłowy format numeru telefonu. Powinien być w formacie +48 i 9 cyfr.');
+      return; // Prevent submission if phone number is invalid
+    }
+    
     const form = e.currentTarget;
     
     // Check if D365 Form Capture API is loaded
@@ -196,6 +277,8 @@ const FloatingContactButton = () => {
                         id="firstName" 
                         name="firstName" 
                         className="w-full p-2 border rounded-md" 
+                        value={formData.firstName}
+                        onChange={handleInputChange}
                         required 
                       />
                     </div>
@@ -207,6 +290,8 @@ const FloatingContactButton = () => {
                         id="lastName" 
                         name="lastName" 
                         className="w-full p-2 border rounded-md" 
+                        value={formData.lastName}
+                        onChange={handleInputChange}
                         required 
                       />
                     </div>
@@ -218,6 +303,8 @@ const FloatingContactButton = () => {
                         id="companyName" 
                         name="companyName" 
                         className="w-full p-2 border rounded-md" 
+                        value={formData.companyName}
+                        onChange={handleInputChange}
                       />
                     </div>
                     
@@ -227,10 +314,14 @@ const FloatingContactButton = () => {
                         type="tel" 
                         id="phoneNumber" 
                         name="phoneNumber" 
-                        className="w-full p-2 border rounded-md" 
-                        defaultValue="+48" 
+                        className={`w-full p-2 border rounded-md ${phoneError ? 'border-red-500' : ''}`}
+                        value={formData.phoneNumber}
+                        onChange={handleInputChange}
                         required 
                       />
+                      {phoneError && (
+                        <p className="text-red-500 text-sm mt-1">{phoneError}</p>
+                      )}
                     </div>
                     
                     <input type="hidden" id="bazaWiedzy" name="bazaWiedzy" value="DEMO-CALL-ME-BACK" />
