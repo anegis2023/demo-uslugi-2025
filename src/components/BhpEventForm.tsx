@@ -39,9 +39,24 @@ const validatePolishNIP = (nip: string): boolean => {
 
 const BhpEventForm = () => {
   const navigate = useNavigate();
-  const isTarciOutsourcingu = window.location.href.includes('targi-outsourcingu');
-  const eventFormFieldName = isTarciOutsourcingu ? 'ANEGIS-DEMO-IMPEL-WYDARZENIE-2' : 'ANEGIS-DEMO-IMPEL-WYDARZENIE-3';
-  const eventFormFieldValue = isTarciOutsourcingu ? 'ANEGIS-DEMO-IMPEL-WYDARZENIE-2' : 'ANEGIS-DEMO-IMPEL-WYDARZENIE-3';
+  const currentUrl = window.location.href;
+  const isTarciOutsourcingu = currentUrl.includes('targi-outsourcingu');
+  const isKonferencjaBezpieczenstwa = currentUrl.includes('konferencja-bezpieczenstwa');
+  
+  // Default to szkolenie-bhp values
+  let eventFormFieldName = 'ANEGIS-DEMO-IMPEL-WYDARZENIE-3';
+  let eventFormFieldValue = 'ANEGIS-DEMO-IMPEL-WYDARZENIE-3';
+  
+  // Override for targi-outsourcingu
+  if (isTarciOutsourcingu) {
+    eventFormFieldName = 'ANEGIS-DEMO-IMPEL-WYDARZENIE-2';
+    eventFormFieldValue = 'ANEGIS-DEMO-IMPEL-WYDARZENIE-2';
+  }
+  // For konferencja-bezpieczenstwa, use the same as szkolenie-bhp
+  else if (isKonferencjaBezpieczenstwa) {
+    eventFormFieldName = 'ANEGIS-DEMO-IMPEL-WYDARZENIE-3';
+    eventFormFieldValue = 'ANEGIS-DEMO-IMPEL-WYDARZENIE-3';
+  }
   
   const [formData, setFormData] = useState({
     nip: '',

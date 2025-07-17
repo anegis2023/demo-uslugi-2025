@@ -37,15 +37,21 @@ const EventDetail = () => {
           .then(form => {
             console.log('Event form found via waitForElement, attaching D365 Form Capture');
             
-            // Set the form ID based on the event
-            const formId = window.location.href.includes('targi-outsourcingu') ? 
-              "b5fa4f48-695d-f011-bec2-000d3ab87efc" : 
-              "219e852c-dc59-f011-bec2-0022489c8d24";
-              
-            // Set the event form field name based on the event
-            const eventFormFieldName = window.location.href.includes('targi-outsourcingu') ?
-              "ANEGIS-DEMO-IMPEL-WYDARZENIE-2" :
-              "ANEGIS-DEMO-IMPEL-WYDARZENIE-3";
+            // Get the form ID based on the event ID
+            let formId = "219e852c-dc59-f011-bec2-0022489c8d24"; // Default (szkolenie-bhp)
+            if (eventId === 'targi-outsourcingu') {
+              formId = "b5fa4f48-695d-f011-bec2-000d3ab87efc";
+            } else if (eventId === 'konferencja-bezpieczenstwa') {
+              formId = "219e852c-dc59-f011-bec2-0022489c8d24"; // Using the same as szkolenie-bhp for now
+            }
+            
+            // Get the event form field name based on the event ID
+            let eventFormFieldName = "ANEGIS-DEMO-IMPEL-WYDARZENIE-3"; // Default (szkolenie-bhp)
+            if (eventId === 'targi-outsourcingu') {
+              eventFormFieldName = "ANEGIS-DEMO-IMPEL-WYDARZENIE-2";
+            } else if (eventId === 'konferencja-bezpieczenstwa') {
+              eventFormFieldName = "ANEGIS-DEMO-IMPEL-WYDARZENIE-3"; // Using the same as szkolenie-bhp for now
+            }
             
             const mappings = [
               {
