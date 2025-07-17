@@ -16,9 +16,9 @@ const EventDetail = () => {
     window.scrollTo(0, 0);
   }, []);
   
-  // Load D365 Form Capture script for BHP event and Targi Outsourcingu event
+  // Load D365 Form Capture script for all events using BhpEventForm
   useEffect(() => {
-    if ((eventId === 'szkolenie-bhp' || eventId === 'targi-outsourcingu') && !formScriptLoaded.current) {
+    if ((eventId === 'szkolenie-bhp' || eventId === 'targi-outsourcingu' || eventId === 'konferencja-bezpieczenstwa') && !formScriptLoaded.current) {
       // Create a script element for the D365 Form Capture library
       const script = document.createElement('script');
       script.src = 'https://cxppusa1formui01cdnsa01-endpoint.azureedge.net/eur/FormCapture/FormCapture.bundle.js';
