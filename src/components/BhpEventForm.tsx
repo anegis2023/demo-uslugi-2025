@@ -39,6 +39,10 @@ const validatePolishNIP = (nip: string): boolean => {
 
 const BhpEventForm = () => {
   const navigate = useNavigate();
+  const isTarciOutsourcingu = window.location.href.includes('targi-outsourcingu');
+  const eventFormFieldName = isTarciOutsourcingu ? 'ANEGIS-DEMO-IMPEL-WYDARZENIE-2' : 'ANEGIS-DEMO-IMPEL-WYDARZENIE-3';
+  const eventFormFieldValue = isTarciOutsourcingu ? 'ANEGIS-DEMO-IMPEL-WYDARZENIE-2' : 'ANEGIS-DEMO-IMPEL-WYDARZENIE-3';
+  
   const [formData, setFormData] = useState({
     nip: '',
     companyName: '',
@@ -49,7 +53,7 @@ const BhpEventForm = () => {
     phone: '',
     marketingConsent: false,
     privacyPolicy: false,
-    'ANEGIS-DEMO-IMPEL-WYDARZENIE-3': 'ANEGIS-DEMO-IMPEL-WYDARZENIE-3',
+    [eventFormFieldName]: eventFormFieldValue,
     'DEMO-IMPEL': 'DEMO-IMPEL'
   });
   
@@ -310,7 +314,7 @@ const BhpEventForm = () => {
           </label>
         </div>
 
-        <input type="hidden" id="ANEGIS-DEMO-IMPEL-WYDARZENIE-3" name="ANEGIS-DEMO-IMPEL-WYDARZENIE-3" value="ANEGIS-DEMO-IMPEL-WYDARZENIE-3" />
+        <input type="hidden" id={eventFormFieldName} name={eventFormFieldName} value={eventFormFieldValue} />
         <input type="hidden" id="DEMO-IMPEL" name="DEMO-IMPEL" value="DEMO-IMPEL" />
       </div>
 

@@ -16,9 +16,9 @@ const EventDetail = () => {
     window.scrollTo(0, 0);
   }, []);
   
-  // Load D365 Form Capture script for BHP event
+  // Load D365 Form Capture script for BHP event and Targi Outsourcingu event
   useEffect(() => {
-    if (eventId === 'szkolenie-bhp' && !formScriptLoaded.current) {
+    if ((eventId === 'szkolenie-bhp' || eventId === 'targi-outsourcingu') && !formScriptLoaded.current) {
       // Create a script element for the D365 Form Capture library
       const script = document.createElement('script');
       script.src = 'https://cxppusa1formui01cdnsa01-endpoint.azureedge.net/eur/FormCapture/FormCapture.bundle.js';
@@ -35,7 +35,17 @@ const EventDetail = () => {
           // Wait for the form to be available in the DOM
           d365mktformcapture.waitForElement("#bhp-event-registration-form")
           .then(form => {
-            console.log('BHP event form found via waitForElement, attaching D365 Form Capture');
+            console.log('Event form found via waitForElement, attaching D365 Form Capture');
+            
+            // Set the form ID based on the event
+            const formId = window.location.href.includes('targi-outsourcingu') ? 
+              "b5fa4f48-695d-f011-bec2-000d3ab87efc" : 
+              "219e852c-dc59-f011-bec2-0022489c8d24";
+              
+            // Set the event form field name based on the event
+            const eventFormFieldName = window.location.href.includes('targi-outsourcingu') ?
+              "ANEGIS-DEMO-IMPEL-WYDARZENIE-2" :
+              "ANEGIS-DEMO-IMPEL-WYDARZENIE-3";
             
             const mappings = [
               {
@@ -79,7 +89,7 @@ const EventDetail = () => {
                 ],
               },
               {
-                FormFieldName: "ANEGIS-DEMO-IMPEL-WYDARZENIE-3",
+                FormFieldName: eventFormFieldName,
                 DataverseFieldName: "cr8b4_eventform",
               },
               {
@@ -108,17 +118,9 @@ const EventDetail = () => {
                 console.log('Form serialized:', JSON.stringify(serializedForm)); // For debugging
                 const payload = serializedForm.SerializedForm.build();
 
-                // Configure the capture settings
-                const captureConfig = {
-                  FormId: "0f99bc54-695d-f011-bec2-000d3ab87efc",
-                  FormApiUrl: "https://public-eur.mkt.dynamics.com/api/v1.0/orgs/1e5b64c1-c132-4237-9477-532bcddae3fd/landingpageforms"
-                };
-                
-                console.log('Submitting form to D365');
-                
-                // Submit the form to D365
-                d365mktformcapture.submitForm(captureConfig, payload)
-                  .then(() => {
+                // Submit the form to D365 with the correct form ID
+                d365mktformcapture.submitForm(serializedForm, { FormId: formId })
+                  .then(response => {
                     console.log('D365 form submission successful');
                     
                     // Show success message
@@ -387,32 +389,13 @@ const EventDetail = () => {
                       </iframe>
                     </div>
                   </div>
-                ) : eventId === 'targi-outsourcingu' ? (
+                ) : eventId === 'szkolenie-bhp' || eventId === 'targi-outsourcingu' ? (
                   <div className="bg-white rounded-lg shadow-md overflow-hidden sticky top-4">
                     <div className="p-6 bg-primary/5 border-b">
                       <h2 className="text-2xl font-bold text-foreground">Zapisz się na wydarzenie</h2>
                     </div>
                     <div className="p-6 w-full max-w-full">
-                      <iframe 
-                        id="targi-outsourcingu-form-iframe"
-                        src="https://assets-eur.mkt.dynamics.com/1e5b64c1-c132-4237-9477-532bcddae3fd/digitalassets/standaloneforms/b5fa4f48-695d-f011-bec2-000d3ab87efc" 
-                        width="100%" 
-                        height="1500px" 
-                        style={{ border: 'none', minWidth: '100%' }}
-                        title="Formularz rejestracji na targi"
-                        sandbox="allow-forms allow-scripts allow-same-origin allow-popups allow-top-navigation"
-                      >
-                        <p>Twoja przeglądarka nie obsługuje iframe. Prosimy o kontakt telefoniczny.</p>
-                      </iframe>
-                    </div>
-                  </div>
-                ) : eventId === 'szkolenie-bhp' ? (
-                  <div className="bg-white rounded-lg shadow-md overflow-hidden sticky top-4">
-                    <div className="p-6 bg-primary/5 border-b">
-                      <h2 className="text-2xl font-bold text-foreground">Zapisz się na wydarzenie</h2>
-                    </div>
-                    <div className="p-6 w-full max-w-full">
-                      <p className="mb-6">Wypełnij formularz, aby zarezerwować miejsce na szkoleniu BHP. Liczba miejsc jest ograniczona.</p>
+                      <p className="mb-6">Wypełnij formularz, aby zarezerwować miejsce na wydarzeniu. Liczba miejsc jest ograniczona.</p>
                       <BhpEventForm />
                     </div>
                   </div>
