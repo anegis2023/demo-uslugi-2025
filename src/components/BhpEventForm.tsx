@@ -199,17 +199,11 @@ const BhpEventForm = () => {
       processingMessage.className = 'p-4 bg-blue-50 text-blue-700 rounded mb-4';
       processingMessage.innerHTML = 'Przetwarzanie formularza...';
       formElement.parentNode?.insertBefore(processingMessage, formElement);
-      
-      // Hide the form
-      formElement.style.display = 'none';
     }
     
-    // Simulate form submission and redirect
-    setTimeout(() => {
-      console.log('Form data submitted:', formData);
-      // Use window.location to ensure proper path resolution
-      window.location.href = '/thank-you.html';
-    }, 2000);
+    // Important: Do not hide the form as D365 Form Capture needs it visible
+    // Let the D365 Form Capture script handle the form submission
+    // The script is attached in EventDetail.tsx and will handle redirection
   };
 
   return (

@@ -137,22 +137,8 @@ const EventDetail = () => {
                 
                 console.log('Submitting form to D365 with FormId:', formId);
                 
-                // For konferencja-bezpieczenstwa, simulate success immediately
-                if (eventId === 'konferencja-bezpieczenstwa') {
-                  console.log('Konferencja-bezpieczenstwa form detected - simulating successful submission');
-                  
-                  // Show success message
-                  if (formContainer) {
-                    formContainer.innerHTML = '<div class="p-4 bg-green-50 text-green-700 rounded">Formularz został wysłany pomyślnie. Przekierowujemy...</div>';
-                  }
-                  
-                  // Redirect after a delay
-                  setTimeout(() => {
-                    window.location.href = '/thank-you.html';
-                  }, 3000);
-                  
-                  return; // Exit early
-                }
+                // Log form submission for all events
+                console.log(eventId + ' form detected - submitting to D365');
                 
                 // Submit the form to D365 for other events
                 d365mktformcapture.submitForm(captureConfig, payload)
