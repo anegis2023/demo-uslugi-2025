@@ -251,72 +251,77 @@ const FloatingContactButton = () => {
             }
           }}
         >
-          <div className="bg-white rounded-lg shadow-xl max-w-3xl w-full max-h-[90vh] flex flex-col">
+          <div className="bg-white rounded-lg shadow-2xl max-w-md w-full max-h-[90vh] flex flex-col overflow-hidden" onClick={(e) => e.stopPropagation()}>
             {/* Popup header */}
-            <div className="flex flex-col items-center p-4 border-b relative">
-              <h2 className="text-2xl font-bold text-center mx-auto">Wypełnij fomularz. Oddzwonimy w ciągu 30 minut.</h2>
+            <div className="flex flex-col items-center p-6 border-b relative bg-gradient-to-r from-primary/10 to-primary/5">
+              <h2 className="text-2xl font-bold text-center mx-auto text-primary">Wypełnij formularz</h2>
+              <p className="text-gray-600 text-center mt-2">Oddzwonimy w ciągu 30 minut</p>
               <Button
                 variant="ghost"
                 size="icon"
                 onClick={() => setIsOpen(false)}
                 aria-label="Zamknij"
-                className="absolute right-2 top-2"
+                className="absolute right-2 top-2 hover:bg-gray-100 transition-colors"
               >
-                <X className="h-6 w-6" />
+                <X className="h-5 w-5" />
               </Button>
             </div>
             {/* Popup content */}
-            <div className="p-4 flex-grow overflow-auto">
-              <div id="floating-contact-form-container">
+            <div className="p-6 overflow-y-auto">
+              <div className="form-container">
                 {!formSubmitted ? (
-                  <form id="floating-contact-form" className="space-y-4" onSubmit={handleSubmit}>
+                  <form id="contactForm" onSubmit={handleSubmit} className="space-y-4">
                     <div className="form-group">
-                      <label htmlFor="firstName" className="block text-sm font-medium mb-1">Imię <span className="text-red-500">*</span></label>
+                      <label htmlFor="firstName" className="block text-sm font-medium text-gray-700 mb-1">Imię <span className="text-red-500">*</span></label>
                       <input 
                         type="text" 
                         id="firstName" 
                         name="firstName" 
-                        className="w-full p-2 border rounded-md" 
+                        className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all" 
                         value={formData.firstName}
                         onChange={handleInputChange}
+                        placeholder="Jan"
                         required 
                       />
                     </div>
                     
                     <div className="form-group">
-                      <label htmlFor="lastName" className="block text-sm font-medium mb-1">Nazwisko <span className="text-red-500">*</span></label>
+                      <label htmlFor="lastName" className="block text-sm font-medium text-gray-700 mb-1">Nazwisko <span className="text-red-500">*</span></label>
                       <input 
                         type="text" 
                         id="lastName" 
                         name="lastName" 
-                        className="w-full p-2 border rounded-md" 
+                        className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all" 
                         value={formData.lastName}
                         onChange={handleInputChange}
+                        placeholder="Kowalski"
                         required 
                       />
                     </div>
                     
                     <div className="form-group">
-                      <label htmlFor="companyName" className="block text-sm font-medium mb-1">Nazwa firmy</label>
+                      <label htmlFor="companyName" className="block text-sm font-medium text-gray-700 mb-1">Nazwa firmy</label>
                       <input 
                         type="text" 
                         id="companyName" 
                         name="companyName" 
-                        className="w-full p-2 border rounded-md" 
+                        className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all" 
                         value={formData.companyName}
                         onChange={handleInputChange}
+                        placeholder="Impel Group"
                       />
                     </div>
                     
                     <div className="form-group">
-                      <label htmlFor="phoneNumber" className="block text-sm font-medium mb-1">Telefon komórkowy <span className="text-red-500">*</span></label>
+                      <label htmlFor="phoneNumber" className="block text-sm font-medium text-gray-700 mb-1">Telefon komórkowy <span className="text-red-500">*</span></label>
                       <input 
                         type="tel" 
                         id="phoneNumber" 
                         name="phoneNumber" 
-                        className={`w-full p-2 border rounded-md ${phoneError ? 'border-red-500' : ''}`}
+                        className={`w-full p-3 border ${phoneError ? 'border-red-500' : 'border-gray-300'} rounded-md focus:outline-none focus:ring-2 ${phoneError ? 'focus:ring-red-300 focus:border-red-500' : 'focus:ring-primary/30 focus:border-primary'} transition-all`}
                         value={formData.phoneNumber}
                         onChange={handleInputChange}
+                        placeholder="+48 500 000 000"
                         required 
                       />
                       {phoneError && (
@@ -327,22 +332,27 @@ const FloatingContactButton = () => {
                     <input type="hidden" id="bazaWiedzy" name="bazaWiedzy" value="DEMO-CALL-ME-BACK" />
                     <input type="hidden" id="sourceFile" name="sourceFile" value="DEMO-IMPEL" />
                     
-                    <div className="mt-6">
+                    <div className="mt-8">
                       <button 
                         type="submit" 
-                        className="w-full bg-primary text-white py-2 px-4 rounded-md hover:bg-primary/90 transition-colors"
+                        className="w-full bg-primary text-white py-3 px-6 rounded-md hover:bg-primary/90 transition-colors font-medium text-lg shadow-md hover:shadow-lg"
                       >
                         WYŚLIJ ZGŁOSZENIE
                       </button>
                     </div>
                   </form>
                 ) : (
-                  <div id="thank-you-message" className="text-center py-8">
-                    <h3 className="text-xl font-bold text-primary mb-4">Dziękujemy za wypełnienie formularza</h3>
-                    <p className="mb-6">Nasz zespół skontaktuje się z Tobą w ciągu 30 minut.</p>
+                  <div id="thank-you-message" className="text-center py-8 px-4">
+                    <div className="mb-6">
+                      <svg className="mx-auto h-16 w-16 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
+                      </svg>
+                    </div>
+                    <h3 className="text-2xl font-bold text-primary mb-3">Dziękujemy za wypełnienie formularza</h3>
+                    <p className="text-gray-600 mb-8 text-lg">Nasz zespół skontaktuje się z Tobą w ciągu 30 minut.</p>
                     <button 
                       onClick={() => setIsOpen(false)}
-                      className="bg-primary text-white py-2 px-4 rounded-md hover:bg-primary/90 transition-colors"
+                      className="bg-primary text-white py-3 px-6 rounded-md hover:bg-primary/90 transition-colors font-medium shadow-md hover:shadow-lg"
                     >
                       Zamknij
                     </button>
