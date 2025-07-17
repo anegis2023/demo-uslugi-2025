@@ -192,8 +192,23 @@ const BhpEventForm = () => {
       return false;
     }
     
-    // Form submission is handled by the D365 Form Capture script
-    // The script is added in the component's useEffect
+    // Show processing message
+    const formElement = document.getElementById('bhp-event-registration-form');
+    if (formElement) {
+      const processingMessage = document.createElement('div');
+      processingMessage.className = 'p-4 bg-blue-50 text-blue-700 rounded mb-4';
+      processingMessage.innerHTML = 'Przetwarzanie formularza...';
+      formElement.parentNode?.insertBefore(processingMessage, formElement);
+      
+      // Hide the form
+      formElement.style.display = 'none';
+    }
+    
+    // Simulate form submission and redirect
+    setTimeout(() => {
+      console.log('Form data submitted:', formData);
+      navigate('/thank-you.html');
+    }, 2000);
   };
 
   return (
