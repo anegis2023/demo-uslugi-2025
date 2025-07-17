@@ -52,10 +52,10 @@ const BhpEventForm = () => {
     eventFormFieldName = 'ANEGIS-DEMO-IMPEL-WYDARZENIE-2';
     eventFormFieldValue = 'ANEGIS-DEMO-IMPEL-WYDARZENIE-2';
   }
-  // For konferencja-bezpieczenstwa, use the same as szkolenie-bhp
+  // For konferencja-bezpieczenstwa, use the updated field name
   else if (isKonferencjaBezpieczenstwa) {
-    eventFormFieldName = 'ANEGIS-DEMO-IMPEL-WYDARZENIE-3';
-    eventFormFieldValue = 'ANEGIS-DEMO-IMPEL-WYDARZENIE-3';
+    eventFormFieldName = 'ANEGIS-DEMO-IMPEL-WYDARZENIE-1';
+    eventFormFieldValue = 'ANEGIS-DEMO-IMPEL-WYDARZENIE-1';
   }
   
   const [formData, setFormData] = useState({

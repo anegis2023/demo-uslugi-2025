@@ -42,7 +42,7 @@ const EventDetail = () => {
             if (eventId === 'targi-outsourcingu') {
               formId = "b5fa4f48-695d-f011-bec2-000d3ab87efc";
             } else if (eventId === 'konferencja-bezpieczenstwa') {
-              formId = "219e852c-dc59-f011-bec2-0022489c8d24"; // Using the same as szkolenie-bhp for now
+              formId = "48345bf8-675d-f011-bec2-000d3ab87efc"; // Updated form ID for konferencja-bezpieczenstwa
             }
             
             // Get the event form field name based on the event ID
@@ -50,7 +50,7 @@ const EventDetail = () => {
             if (eventId === 'targi-outsourcingu') {
               eventFormFieldName = "ANEGIS-DEMO-IMPEL-WYDARZENIE-2";
             } else if (eventId === 'konferencja-bezpieczenstwa') {
-              eventFormFieldName = "ANEGIS-DEMO-IMPEL-WYDARZENIE-3"; // Using the same as szkolenie-bhp for now
+              eventFormFieldName = "ANEGIS-DEMO-IMPEL-WYDARZENIE-1"; // Updated field name for konferencja-bezpieczenstwa
             }
             
             const mappings = [
