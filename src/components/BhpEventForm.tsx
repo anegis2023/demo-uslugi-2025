@@ -207,7 +207,8 @@ const BhpEventForm = () => {
     // Simulate form submission and redirect
     setTimeout(() => {
       console.log('Form data submitted:', formData);
-      navigate('/thank-you.html');
+      // Use window.location to ensure proper path resolution
+      window.location.href = '/thank-you.html';
     }, 2000);
   };
 
