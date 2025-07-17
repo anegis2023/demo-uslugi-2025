@@ -1,18 +1,189 @@
 import { useParams, Link } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ServiceContactForm from "@/components/ServiceContactForm";
+import BhpEventForm from "@/components/BhpEventForm";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, Calendar, MapPin, Clock, Users } from "lucide-react";
 
 const EventDetail = () => {
   const { eventId } = useParams();
+  const formScriptLoaded = useRef(false);
 
   // Scroll to top when component mounts
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+  
+  // Load D365 Form Capture script for BHP event
+  useEffect(() => {
+    if (eventId === 'szkolenie-bhp' && !formScriptLoaded.current) {
+      // Create a script element for the D365 Form Capture library
+      const script = document.createElement('script');
+      script.src = 'https://cxppusa1formui01cdnsa01-endpoint.azureedge.net/eur/FormCapture/FormCapture.bundle.js';
+      script.async = true;
+      
+      // Create a second script element for our custom D365 form capture implementation
+      const implementationScript = document.createElement('script');
+      
+      script.onload = () => {
+        console.log('D365 Form Capture script loaded');
+        
+        // Set the content of our implementation script
+        implementationScript.textContent = `
+          // Wait for the form to be available in the DOM
+          d365mktformcapture.waitForElement("#bhp-event-registration-form")
+          .then(form => {
+            console.log('BHP event form found via waitForElement, attaching D365 Form Capture');
+            
+            const mappings = [
+              {
+                FormFieldName: "nip",
+                DataverseFieldName: "an_an_taxnumber",
+              },
+              {
+                FormFieldName: "companyName",
+                DataverseFieldName: "an_an_companyname",
+              },
+              {
+                FormFieldName: "firstName",
+                DataverseFieldName: "firstname",
+              },
+              {
+                FormFieldName: "lastName",
+                DataverseFieldName: "lastname",
+              },
+              {
+                FormFieldName: "jobTitle",
+                DataverseFieldName: "jobtitle",
+              },
+              {
+                FormFieldName: "email",
+                DataverseFieldName: "emailaddress1",
+              },
+              {
+                FormFieldName: "phone",
+                DataverseFieldName: "mobilephone",
+              },
+              {
+                FormFieldName: "marketingConsent",
+                DataverseFieldName: "msdynmkt_purposeid;channels;optinwhenchecked",
+                DataverseFieldValue: "aaeecf2e-82fe-ef11-bae7-000d3ab4229f;Email,Text;true",
+              },
+              {
+                FormFieldName: "privacyPolicy",
+                DataverseFieldName: "an_privacypolicyaccepted",
+                DataverseFieldValue: [
+                  { FormValue: true, DataverseValue: "1" }, // Privacy policy accepted
+                ],
+              },
+              {
+                FormFieldName: "eventForm",
+                DataverseFieldName: "cr8b4_eventform",
+              },
+              {
+                FormFieldName: "sourceFile",
+                DataverseFieldName: "an_sourcefile",
+              },
+            ];
+
+            // Add event listener to the form
+            form.addEventListener("submit", (e) => {
+              e.preventDefault(); // Prevent default form submission
+              console.log('Form submit intercepted by D365 Form Capture');
+              
+              try {
+                // Show processing message
+                const formContainer = form.closest('.p-6');
+                if (formContainer) {
+                  const processingMessage = document.createElement('div');
+                  processingMessage.className = 'p-4 bg-blue-50 text-blue-700 rounded mb-4';
+                  processingMessage.innerHTML = 'Przetwarzanie formularza...';
+                  form.parentNode.insertBefore(processingMessage, form);
+                }
+                
+                // Serialize the form data
+                const serializedForm = d365mktformcapture.serializeForm(form, mappings);
+                console.log('Form serialized:', JSON.stringify(serializedForm)); // For debugging
+                const payload = serializedForm.SerializedForm.build();
+
+                // Configure the capture settings
+                const captureConfig = {
+                  FormId: "0f99bc54-695d-f011-bec2-000d3ab87efc",
+                  FormApiUrl: "https://public-eur.mkt.dynamics.com/api/v1.0/orgs/1e5b64c1-c132-4237-9477-532bcddae3fd/landingpageforms"
+                };
+                
+                console.log('Submitting form to D365');
+                
+                // Submit the form to D365
+                d365mktformcapture.submitForm(captureConfig, payload)
+                  .then(() => {
+                    console.log('D365 form submission successful');
+                    
+                    // Show success message
+                    const formContainer = form.closest('.p-6');
+                    if (formContainer) {
+                      formContainer.innerHTML = '<div class="p-4 bg-green-50 text-green-700 rounded">Formularz został wysłany pomyślnie. Przekierowujemy...</div>';
+                    }
+                    
+                    // Redirect after a delay
+                    setTimeout(() => {
+                      window.location.href = '/thank-you.html';
+                    }, 3000);
+                  })
+                  .catch(error => {
+                    console.error('D365 form submission failed:', error);
+                    
+                    // Check if this is a CORS error (common during local development)
+                    const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+                    const isCorsError = error.toString().includes('CORS') || error.toString().includes('Failed to fetch');
+                    
+                    if (isLocalhost && isCorsError) {
+                      console.log('CORS error detected during local development - this is expected and will work in production');
+                      
+                      // For local development, simulate successful submission
+                      const formContainer = form.closest('.p-6');
+                      if (formContainer) {
+                        formContainer.innerHTML = '<div class="p-4 bg-yellow-50 text-yellow-700 rounded mb-4">Lokalne środowisko: CORS blokuje wysyłanie do D365.</div>' +
+                                               '<div class="p-4 bg-green-50 text-green-700 rounded">Symulacja udanego wysłania formularza. Przekierowujemy...</div>';
+                      }
+                      
+                      // Redirect after a delay
+                      setTimeout(() => {
+                        window.location.href = '/thank-you.html';
+                      }, 3000);
+                    } else {
+                      // Real error - show alert
+                      alert('Wystąpił błąd podczas wysyłania formularza. Prosimy spróbować ponownie.');
+                    }
+                  });
+              } catch (error) {
+                console.error('Error in form submission process:', error);
+                alert('Wystąpił błąd podczas przetwarzania formularza. Prosimy spróbować ponownie.');
+              }
+            }, true); // Use capture phase to ensure our handler runs first
+            
+            console.log('D365 Form Capture successfully attached to form');
+          })
+          .catch(error => {
+            console.error('Failed to find BHP event form:', error);
+          });
+        `;
+        
+        // Add the implementation script to the document
+        document.head.appendChild(implementationScript);
+      };
+      
+      script.onerror = () => {
+        console.error('Failed to load D365 Form Capture script');
+      };
+      
+      // Add the main D365 script to the document
+      document.head.appendChild(script);
+      formScriptLoaded.current = true;
+    }
+  }, [eventId]);
 
   const events = {
     "konferencja-bezpieczenstwa": {
@@ -241,17 +412,8 @@ const EventDetail = () => {
                       <h2 className="text-2xl font-bold text-foreground">Zapisz się na wydarzenie</h2>
                     </div>
                     <div className="p-6 w-full max-w-full">
-                      <iframe 
-                        id="szkolenie-bhp-form-iframe"
-                        src="https://assets-eur.mkt.dynamics.com/1e5b64c1-c132-4237-9477-532bcddae3fd/digitalassets/standaloneforms/0f99bc54-695d-f011-bec2-000d3ab87efc" 
-                        width="100%" 
-                        height="1500px" 
-                        style={{ border: 'none', minWidth: '100%' }}
-                        title="Formularz rejestracji na szkolenie BHP"
-                        sandbox="allow-forms allow-scripts allow-same-origin allow-popups allow-top-navigation"
-                      >
-                        <p>Twoja przeglądarka nie obsługuje iframe. Prosimy o kontakt telefoniczny.</p>
-                      </iframe>
+                      <p className="mb-6">Wypełnij formularz, aby zarezerwować miejsce na szkoleniu BHP. Liczba miejsc jest ograniczona.</p>
+                      <BhpEventForm />
                     </div>
                   </div>
                 ) : (
