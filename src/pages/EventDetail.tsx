@@ -388,26 +388,7 @@ const EventDetail = () => {
               </div>
 
               <div className="md:col-span-1">
-                {eventId === 'konferencja-bezpieczenstwa' ? (
-                  <div className="bg-white rounded-lg shadow-md overflow-hidden sticky top-4">
-                    <div className="p-6 bg-primary/5 border-b">
-                      <h2 className="text-2xl font-bold text-foreground">Zapisz się na wydarzenie</h2>
-                    </div>
-                    <div className="p-6 w-full max-w-full">
-                      <iframe 
-                        id="konferencja-bezpieczenstwa-form-iframe"
-                        src="https://assets-eur.mkt.dynamics.com/1e5b64c1-c132-4237-9477-532bcddae3fd/digitalassets/standaloneforms/48345bf8-675d-f011-bec2-000d3ab87efc" 
-                        width="100%" 
-                        height="1500px" 
-                        style={{ border: 'none', minWidth: '100%' }}
-                        title="Formularz rejestracji na konferencję"
-                        sandbox="allow-forms allow-scripts allow-same-origin allow-popups allow-top-navigation"
-                      >
-                        <p>Twoja przeglądarka nie obsługuje iframe. Prosimy o kontakt telefoniczny.</p>
-                      </iframe>
-                    </div>
-                  </div>
-                ) : eventId === 'szkolenie-bhp' || eventId === 'targi-outsourcingu' ? (
+                {eventId === 'szkolenie-bhp' || eventId === 'targi-outsourcingu' || eventId === 'konferencja-bezpieczenstwa' ? (
                   <div className="bg-white rounded-lg shadow-md overflow-hidden sticky top-4">
                     <div className="p-6 bg-primary/5 border-b">
                       <h2 className="text-2xl font-bold text-foreground">Zapisz się na wydarzenie</h2>
