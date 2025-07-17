@@ -118,8 +118,16 @@ const EventDetail = () => {
                 console.log('Form serialized:', JSON.stringify(serializedForm)); // For debugging
                 const payload = serializedForm.SerializedForm.build();
 
-                // Submit the form to D365 with the correct form ID
-                d365mktformcapture.submitForm(serializedForm, { FormId: formId })
+                // Configure the capture settings
+                const captureConfig = {
+                  FormId: formId,
+                  FormApiUrl: "https://public-eur.mkt.dynamics.com/api/v1.0/orgs/1e5b64c1-c132-4237-9477-532bcddae3fd/landingpageforms"
+                };
+                
+                console.log('Submitting form to D365 with FormId:', formId);
+                
+                // Submit the form to D365
+                d365mktformcapture.submitForm(captureConfig, payload)
                   .then(response => {
                     console.log('D365 form submission successful');
                     
@@ -136,6 +144,10 @@ const EventDetail = () => {
                   })
                   .catch(error => {
                     console.error('D365 form submission failed:', error);
+                    console.log('Form ID used:', formId);
+                    console.log('Event form field name:', eventFormFieldName);
+                    console.log('Form payload:', payload);
+                    console.log('Capture config:', captureConfig);
                     
                     // Check if this is a CORS error (common during local development)
                     const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
