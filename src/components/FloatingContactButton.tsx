@@ -112,8 +112,9 @@ const FloatingContactButton = () => {
       { FormFieldName: "lastName", DataverseFieldName: "lastname" },
       { FormFieldName: "companyName", DataverseFieldName: "an_an_companyname" },
       { FormFieldName: "phoneNumber", DataverseFieldName: "mobilephone" },
-      { FormFieldName: "bazaWiedzy", DataverseFieldName: "cr8b4_bazawiedzy" },
-      { FormFieldName: "sourceFile", DataverseFieldName: "an_sourcefile" },
+      // Static values for bazaWiedzy and sourceFile as requested
+      { FormFieldName: "bazaWiedzy", DataverseFieldName: "cr8b4_bazawiedzy", StaticValue: "DEMO-CALL-ME-BACK" },
+      { FormFieldName: "sourceFile", DataverseFieldName: "an_sourcefile", StaticValue: "DEMO-IMPEL" },
     ];
 
     try {
@@ -232,7 +233,7 @@ const FloatingContactButton = () => {
                       />
                     </div>
                     
-                    <input type="hidden" id="bazaWiedzy" name="bazaWiedzy" value="ANEGIS-DEMO-IMPEL-KONTAKT" />
+                    <input type="hidden" id="bazaWiedzy" name="bazaWiedzy" value="DEMO-CALL-ME-BACK" />
                     <input type="hidden" id="sourceFile" name="sourceFile" value="DEMO-IMPEL" />
                     
                     <div className="mt-6">
