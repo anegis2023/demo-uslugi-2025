@@ -49,8 +49,8 @@ const BhpEventForm = () => {
     phone: '',
     marketingConsent: false,
     privacyPolicy: false,
-    eventForm: 'Szkolenie BHP dla Managerów',
-    sourceFile: window.location.href
+    'ANEGIS-DEMO-IMPEL-WYDARZENIE-3': 'ANEGIS-DEMO-IMPEL-WYDARZENIE-3',
+    'DEMO-IMPEL': 'DEMO-IMPEL'
   });
   
   // State for validation errors
@@ -310,8 +310,8 @@ const BhpEventForm = () => {
           </label>
         </div>
 
-        <input type="hidden" id="eventForm" name="eventForm" value={formData.eventForm} />
-        <input type="hidden" id="sourceFile" name="sourceFile" value={formData.sourceFile} />
+        <input type="hidden" id="ANEGIS-DEMO-IMPEL-WYDARZENIE-3" name="ANEGIS-DEMO-IMPEL-WYDARZENIE-3" value="ANEGIS-DEMO-IMPEL-WYDARZENIE-3" />
+        <input type="hidden" id="DEMO-IMPEL" name="DEMO-IMPEL" value="DEMO-IMPEL" />
       </div>
 
       <Button type="submit" className="w-full bg-accent-red hover:bg-accent-red/90">
