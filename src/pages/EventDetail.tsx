@@ -79,11 +79,11 @@ const EventDetail = () => {
                 ],
               },
               {
-                FormFieldName: "eventForm",
+                FormFieldName: "ANEGIS-DEMO-IMPEL-WYDARZENIE-3",
                 DataverseFieldName: "cr8b4_eventform",
               },
               {
-                FormFieldName: "sourceFile",
+                FormFieldName: "DEMO-IMPEL",
                 DataverseFieldName: "an_sourcefile",
               },
             ];

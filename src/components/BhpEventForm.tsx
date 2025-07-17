@@ -6,6 +6,37 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 
+// Function to validate Polish NIP (VAT ID) using the official algorithm
+const validatePolishNIP = (nip: string): boolean => {
+  // Remove any non-digit characters
+  const cleanNIP = nip.replace(/[^0-9]/g, '');
+  
+  // Check if it's exactly 10 digits
+  if (cleanNIP.length !== 10) {
+    return false;
+  }
+  
+  // Weights used in the NIP validation algorithm
+  const weights = [6, 5, 7, 2, 3, 4, 5, 6, 7];
+  
+  // Calculate the checksum
+  let sum = 0;
+  for (let i = 0; i < 9; i++) {
+    sum += parseInt(cleanNIP.charAt(i)) * weights[i];
+  }
+  
+  // Calculate the check digit
+  const checkDigit = sum % 11;
+  
+  // If checkDigit is 10, the NIP is invalid
+  if (checkDigit === 10) {
+    return false;
+  }
+  
+  // Compare the calculated check digit with the last digit of the NIP
+  return checkDigit === parseInt(cleanNIP.charAt(9));
+};
+
 const BhpEventForm = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
@@ -21,13 +52,97 @@ const BhpEventForm = () => {
     eventForm: 'Szkolenie BHP dla Managerów',
     sourceFile: window.location.href
   });
+  
+  // State for validation errors
+  const [nipError, setNipError] = useState<string | null>(null);
+  const [phoneError, setPhoneError] = useState<string | null>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
+    
+    // Special validation for NIP (Polish VAT ID)
+    if (name === 'nip') {
+      // Only allow digits and limit to 10 characters
+      const sanitizedValue = value.replace(/[^0-9]/g, '').slice(0, 10);
+      
+      // Update form data
+      setFormData(prev => ({
+        ...prev,
+        [name]: sanitizedValue
+      }));
+      
+      // Validate NIP if it's 10 digits long
+      if (sanitizedValue.length === 10) {
+        if (!validatePolishNIP(sanitizedValue)) {
+          setNipError('Nieprawidłowy NIP. Sprawdź poprawność numeru.');
+        } else {
+          setNipError(null);
+        }
+      } else {
+        setNipError(null);
+      }
+    } 
+    // Special validation for phone (Polish cell phone number)
+    else if (name === 'phone') {
+      // Handle Polish phone number format (+48XXXXXXXXX)
+      let sanitizedValue = value;
+      
+      // If the user is typing and hasn't added +48 yet, add it for them
+      if (!value.startsWith('+48') && value.length > 0 && !value.includes('+')) {
+        // If they're entering just digits, prepend +48
+        if (/^[0-9]+$/.test(value)) {
+          sanitizedValue = '+48' + value;
+        }
+      }
+      
+      // Ensure only valid characters for phone number (+, digits)
+      sanitizedValue = sanitizedValue.replace(/[^\+0-9]/g, '');
+      
+      // Limit to +48 plus 9 digits (total 12 characters)
+      if (sanitizedValue.startsWith('+48')) {
+        const digitsAfterPrefix = sanitizedValue.substring(3);
+        if (digitsAfterPrefix.length > 9) {
+          sanitizedValue = '+48' + digitsAfterPrefix.slice(0, 9);
+        }
+      } else if (sanitizedValue.startsWith('+')) {
+        // If they're typing a different prefix, limit appropriately
+        if (sanitizedValue.length > 12) {
+          sanitizedValue = sanitizedValue.slice(0, 12);
+        }
+      }
+      
+      setFormData(prev => ({
+        ...prev,
+        [name]: sanitizedValue
+      }));
+      
+      // Validate phone number format
+      if (sanitizedValue.length > 0) {
+        // Check if it's in the correct format: +48 followed by 9 digits
+        const isValidFormat = /^\+48[0-9]{9}$/.test(sanitizedValue);
+        
+        if (!isValidFormat) {
+          if (sanitizedValue.length >= 12) {
+            // If they've entered enough characters but format is wrong
+            setPhoneError('Nieprawidłowy format numeru telefonu. Powinien być w formacie +48 i 9 cyfr.');
+          } else if (sanitizedValue.length > 3) {
+            // If they're still typing but format is wrong
+            setPhoneError('Numer telefonu powinien być w formacie +48 i 9 cyfr.');
+          } else {
+            setPhoneError(null);
+          }
+        } else {
+          setPhoneError(null);
+        }
+      } else {
+        setPhoneError(null);
+      }
+    } else {
+      setFormData(prev => ({
+        ...prev,
+        [name]: value
+      }));
+    }
   };
 
   const handleCheckboxChange = (name: string, checked: boolean) => {
@@ -39,6 +154,25 @@ const BhpEventForm = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    let hasErrors = false;
+    
+    // Validate NIP before submission
+    if (formData.nip.length === 10 && !validatePolishNIP(formData.nip)) {
+      setNipError('Nieprawidłowy NIP. Sprawdź poprawność numeru.');
+      hasErrors = true;
+    }
+    
+    // Validate phone number before submission
+    if (formData.phone.length > 0 && !/^\+48[0-9]{9}$/.test(formData.phone)) {
+      setPhoneError('Nieprawidłowy format numeru telefonu. Powinien być w formacie +48 i 9 cyfr.');
+      hasErrors = true;
+    }
+    
+    if (hasErrors) {
+      e.stopPropagation(); // Prevent form submission
+      return false;
+    }
+    
     // Form submission is handled by the D365 Form Capture script
     // The script is added in the component's useEffect
   };
@@ -54,8 +188,15 @@ const BhpEventForm = () => {
             value={formData.nip}
             onChange={handleChange}
             placeholder="Podaj NIP firmy"
+            maxLength={10}
+            pattern="[0-9]{10}"
+            title="NIP musi składać się z 10 cyfr i być poprawny według algorytmu walidacji"
             required
+            className={nipError ? 'border-red-500' : ''}
           />
+          {nipError && (
+            <div className="text-red-500 text-sm mt-1">{nipError}</div>
+          )}
         </div>
         
         <div>
@@ -128,9 +269,15 @@ const BhpEventForm = () => {
             type="tel"
             value={formData.phone}
             onChange={handleChange}
-            placeholder="Podaj numer telefonu"
+            placeholder="+48505000000"
+            pattern="\+48[0-9]{9}"
+            title="Numer telefonu musi być w formacie +48 i 9 cyfr"
             required
+            className={phoneError ? 'border-red-500' : ''}
           />
+          {phoneError && (
+            <div className="text-red-500 text-sm mt-1">{phoneError}</div>
+          )}
         </div>
 
         <div className="flex items-start space-x-2 mb-2">
