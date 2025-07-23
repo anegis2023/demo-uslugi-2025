@@ -12,8 +12,8 @@ const Footer = () => {
           <div>
             <div className="mb-4">
               <img 
-                src="/images/IMPELLOGOwhite.png" 
-                alt="IMPEL PRO" 
+                src="/images/impuls-services.png" 
+                alt="Impuls Services" 
                 className="h-16 w-auto"
               />
             </div>
