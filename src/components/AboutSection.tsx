@@ -47,13 +47,13 @@ const AboutSection = () => {
           {/* Left Content */}
           <div>
             <Badge variant="outline" className="mb-4 text-primary border-primary">
-              O firmie Impel Group
+              O firmie Impuls Services
             </Badge>
             <h2 className="text-4xl font-bold text-foreground mb-6">
               Twój zaufany <span className="text-primary">partner biznesowy</span>
             </h2>
             <p className="text-lg text-muted-foreground mb-6 leading-relaxed">
-              Od ponad 15 lat Impel Group jest wiodącym dostawcą kompleksowych 
+              Od ponad 15 lat Impuls Services jest wiodącym dostawcą kompleksowych 
               rozwiązań biznesowych w całej Polsce. Specjalizujemy się w dostarczaniu 
               wysokiej jakości usług outsourcingowych, które pomagają firmom skupić się 
               na ich podstawowej działalności, podczas gdy my zajmujemy się doskonałością operacyjną.

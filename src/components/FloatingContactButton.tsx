@@ -308,7 +308,7 @@ const FloatingContactButton = () => {
                         className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all" 
                         value={formData.companyName}
                         onChange={handleInputChange}
-                        placeholder="Impel Group"
+                        placeholder="Impuls Services"
                       />
                     </div>
                     

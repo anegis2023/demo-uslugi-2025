@@ -50,7 +50,7 @@ const EventsList = () => {
               Wydarzenia
             </h1>
             <p className="text-lg text-center text-muted-foreground max-w-3xl mx-auto">
-              Zapoznaj się z nadchodzącymi wydarzeniami organizowanymi przez Impel Group. Konferencje, szkolenia i targi branżowe - dołącz do nas!
+              Zapoznaj się z nadchodzącymi wydarzeniami organizowanymi przez Impuls Services. Konferencje, szkolenia i targi branżowe - dołącz do nas!
             </p>
           </div>
         </section>

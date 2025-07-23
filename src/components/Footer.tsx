@@ -78,7 +78,7 @@ const Footer = () => {
         </div>
 
         <div className="border-t border-primary-foreground/20 mt-8 pt-8 text-center text-primary-foreground/80">
-          <p>&copy; {currentYear} Impel Group. Wszelkie prawa zastrzeżone. Profesjonalne usługi biznesowe.</p>
+          <p>&copy; {currentYear} Impuls Services. Wszelkie prawa zastrzeżone. Profesjonalne usługi biznesowe.</p>
         </div>
       </div>
     </footer>
