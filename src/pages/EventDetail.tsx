@@ -38,7 +38,7 @@ const EventDetail = () => {
             console.log('Event form found via waitForElement, attaching D365 Form Capture');
             
             // Set the form ID based on the event
-            let formId = "219e852c-dc59-f011-bec2-0022489c8d24"; // Default for szkolenie-bhp
+            let formId = "0f99bc54-695d-f011-bec2-000d3ab87efc"; // Default for szkolenie-bhp
             let eventFormFieldName = "ANEGIS-DEMO-IMPEL-WYDARZENIE-3"; // Default for szkolenie-bhp
             
             if (window.location.href.includes('targi-outsourcingu')) {
