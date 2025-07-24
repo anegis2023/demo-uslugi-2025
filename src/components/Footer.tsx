@@ -51,12 +51,11 @@ const Footer = () => {
           <div>
             <h3 className="text-lg font-semibold mb-4">Szybkie linki</h3>
             <ul className="space-y-2 text-primary-foreground/80">
-              <li><a href="#" className="hover:text-white transition-colors">O nas</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">Jak pracujemy</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">Aktualności</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">Kariera</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">Polityka prywatności</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">Regulamin</a></li>
+              <li><a href="#services" className="hover:text-white transition-colors">Usługi</a></li>
+              <li><a href="/wydarzenia" className="hover:text-white transition-colors">Wydarzenia</a></li>
+              <li><a href="#about" className="hover:text-white transition-colors">O nas</a></li>
+              <li><a href="#process" className="hover:text-white transition-colors">Jak pracujemy</a></li>
+              <li><a href="#contact" className="hover:text-white transition-colors">Kontakt</a></li>
             </ul>
           </div>
 
