@@ -237,7 +237,7 @@ const EventDetail = () => {
       location: "Kraków, Centrum Kongresowe ICE",
       address: "ul. Marii Konopnickiej 17, 30-302 Kraków",
       description: "Największe w Polsce targi poświęcone outsourcingowi usług biznesowych. Poznaj korzyści z outsourcingu i nawiąż kontakty z liderami branży.",
-      image: "/images/pb.png",
+      image: "/images/business-1.jpg",
       details: [
         "Ponad 50 wystawców z branży outsourcingu",
         "Prezentacje case studies i success stories",
@@ -263,7 +263,7 @@ const EventDetail = () => {
       location: "Wrocław, Centrum Szkoleniowe Impel",
       address: "ul. Ślężna 118, 53-111 Wrocław",
       description: "Kompleksowe szkolenie z zakresu BHP dla kadry zarządzającej. Dowiedz się, jak skutecznie wdrażać procedury bezpieczeństwa w swojej organizacji.",
-      image: "/images/bhp.png",
+      image: "/images/bnp-1.jpg",
       details: [
         "Aktualne przepisy BHP dla kadry zarządzającej",
         "Odpowiedzialność prawna pracodawcy i kierowników",

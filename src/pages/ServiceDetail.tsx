@@ -236,44 +236,26 @@ const ServiceDetail = () => {
                 </ul>
                 {serviceId === 'sprzatanie' && (
                   <div className="mt-8">
-                    <video 
-                      autoPlay={true}
-                      loop={true}
-                      muted={true}
-                      playsInline={true}
-                      controls={false}
-                      poster="/images/czystosc.png"
-                      preload="auto"
-                      aria-label="Czystość w miejscu pracy"
+                    <img 
+                      src="/images/cleaning-1.jpg" 
+                      alt="Czystość w miejscu pracy" 
                       className="w-full rounded-lg shadow-md"
-                    >
-                      <source src="/images/impel-sprzatanie.mp4" type="video/mp4" />
-                      Your browser does not support the video tag.
-                    </video>
+                    />
                   </div>
                 )}
                 {serviceId === 'ochrona' && (
                   <div className="mt-8">
-                    <video 
-                      autoPlay={true}
-                      loop={true}
-                      muted={true}
-                      playsInline={true}
-                      controls={false}
-                      poster="/images/bezpieczenstwo-2.png"
-                      preload="auto"
-                      aria-label="Bezpieczeństwo Twojego biznesu"
+                    <img 
+                      src="/images/security-1.jpg" 
+                      alt="Bezpieczeństwo Twojego biznesu" 
                       className="w-full rounded-lg shadow-md"
-                    >
-                      <source src="/images/impel-security.mp4" type="video/mp4" />
-                      Your browser does not support the video tag.
-                    </video>
+                    />
                   </div>
                 )}
                 {serviceId === 'bhp' && (
                   <div className="mt-8">
                     <img 
-                      src="/images/bhp.png" 
+                      src="/images/bnp-1.jpg" 
                       alt="Bezpieczeństwo i higiena pracy" 
                       className="w-full rounded-lg shadow-md" 
                     />
@@ -282,7 +264,7 @@ const ServiceDetail = () => {
                 {serviceId === 'procesy-biznesowe' && (
                   <div className="mt-8">
                     <img 
-                      src="/images/pb.png" 
+                      src="/images/business-1.jpg" 
                       alt="Procesy biznesowe" 
                       className="w-full rounded-lg shadow-md" 
                     />
@@ -290,26 +272,17 @@ const ServiceDetail = () => {
                 )}
                 {serviceId === 'catering' && (
                   <div className="mt-8">
-                    <video 
-                      autoPlay={true}
-                      loop={true}
-                      muted={true}
-                      playsInline={true}
-                      controls={false}
-                      poster="/images/cetering.png"
-                      preload="auto"
-                      aria-label="Usługi cateringowe"
+                    <img 
+                      src="/images/catering-1.jpg" 
+                      alt="Usługi cateringowe" 
                       className="w-full rounded-lg shadow-md"
-                    >
-                      <source src="/images/impel-catering.mp4" type="video/mp4" />
-                      Your browser does not support the video tag.
-                    </video>
+                    />
                   </div>
                 )}
                 {serviceId === 'techniczne' && (
                   <div className="mt-8">
                     <img 
-                      src="/images/serwis.png" 
+                      src="/images/technical-services.jpg" 
                       alt="Usługi techniczne" 
                       className="w-full rounded-lg shadow-md" 
                     />

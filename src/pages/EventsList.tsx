@@ -26,7 +26,7 @@ const EventsList = () => {
       date: "22 października 2025",
       location: "Kraków, Centrum Kongresowe ICE",
       description: "Największe w Polsce targi poświęcone outsourcingowi usług biznesowych. Poznaj korzyści z outsourcingu i nawiąż kontakty z liderami branży.",
-      image: "/images/pb.png"
+      image: "/images/business-1.jpg"
     },
     {
       id: "szkolenie-bhp",
@@ -34,7 +34,7 @@ const EventsList = () => {
       date: "5 listopada 2025",
       location: "Wrocław, Centrum Szkoleniowe Impel",
       description: "Kompleksowe szkolenie z zakresu BHP dla kadry zarządzającej. Dowiedz się, jak skutecznie wdrażać procedury bezpieczeństwa w swojej organizacji.",
-      image: "/images/bhp.png"
+      image: "/images/bnp-1.jpg"
     }
   ];
 
