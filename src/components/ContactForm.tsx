@@ -68,18 +68,7 @@ const ContactForm = () => {
                   </div>
                 </CardContent>
               </Card>
-              <div className="mt-8 relative">
-                <img 
-                  src="/images/firs_section.png" 
-                  alt="Profesjonalne usługi" 
-                  className="w-full rounded-lg shadow-lg object-cover transform transition-transform duration-300 hover:scale-[1.02]" 
-                  style={{ 
-                    maxHeight: '280px',
-                    objectPosition: 'center',
-                  }}
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent rounded-lg"></div>
-              </div>
+
             </div>
           </div>
 
