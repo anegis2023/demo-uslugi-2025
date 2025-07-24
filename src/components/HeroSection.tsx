@@ -33,8 +33,8 @@ const HeroSection = () => {
               <span className="block text-accent-red-foreground">dla Twojego biznesu</span>
             </h1>
             <p className="text-xl text-white/90 mb-8 leading-relaxed max-w-2xl">
-              Jesteśmy firmą outsourcingową oferującą kompleksowe usługi biznesowe 
-              na terenie całego kraju. Odkryj nasze innowacyjne rozwiązania!
+              To jest strona demonstracyjna prezentująca możliwości integracji Dynamics 365. 
+              Odkryj jak nowoczesne rozwiązania CRM mogą wspierać Twój biznes!
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
               <Button 
