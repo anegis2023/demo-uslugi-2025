@@ -12,7 +12,7 @@ const Footer = () => {
           <div>
             <div className="mb-4">
               <img 
-                src="/images/impuls-services-white.png" 
+                src="/images/logo impulsservice_white.png" 
                 alt="Impuls Services" 
                 className="h-16 w-auto"
               />

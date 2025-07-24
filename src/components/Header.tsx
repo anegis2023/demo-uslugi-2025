@@ -35,7 +35,7 @@ const Header = () => {
         <div className="flex justify-between items-center py-4">
           <div className="flex items-center">
             <a href="/" className="flex items-center">
-              <img src="/images/impuls-services.png" alt="Impuls Services" className="h-16 w-auto" />
+              <img src="/images/logo impulsservice_color.png" alt="Impuls Services" className="h-16 w-auto" />
             </a>
           </div>
 
